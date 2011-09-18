@@ -1,0 +1,28 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  overflow: hidden;
+}
+
+#editor {
+  width: 90%;
+  height: 100%;
+}
+
+#toolbox {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+
+  width: 10%;
+  height: 100%;
+
+  background: #fff;
+}
+
+#toolbox select {
+  width: 100%;
+}

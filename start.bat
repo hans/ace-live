@@ -1,0 +1,1 @@
+./bin/node server.js

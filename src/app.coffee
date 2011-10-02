@@ -3,6 +3,7 @@ path = require('path')
 fs = require('fs')
 nowjs = require('now')
 child_process = require('child_process')
+dmp = require('./diff_match_patch-node')
 
 port = process.env.PORT || 8000
 app = express.createServer()
@@ -33,12 +34,15 @@ child_process.exec 'tput bold', (error, bold, stderr) ->
         console.log bold + 'Available modes: ' + normal + ace_modes.join(', ')
         console.log bold + 'Available themes: ' + normal + ace_themes.join(', ')
 
+doc = ''
+
 # App Routes
 app.get '/', (request, response) ->
   response.render 'index',
     locals:
       ace_modes: ace_modes
       ace_themes: ace_themes
+      doc: doc.replace("'", "\\'")
 
 # Listen
 app.listen port
@@ -47,4 +51,5 @@ app.listen port
 everyone = nowjs.initialize(app)
 
 everyone.now.sendPatch = (sender, patch_obj) ->
+  doc = dmp.patch_apply(patch_obj, doc)[0]
   everyone.now.applyPatch(sender, patch_obj)

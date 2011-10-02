@@ -7,16 +7,18 @@ div id: 'toolbox', ->
   select id: 'theme_selector', ->
     option theme for theme in @ace_themes
 
+script "window.initial_content = '#{@doc}';"
 coffeescript ->
   window.editor = null
   window.session = null
   dmp = null
-  previous = ''
+  previous = window.initial_content
   just_received = false
 
   $.getScript '/vendor/ace/build/src/ace-uncompressed.js', ->
     window.editor = ace.edit 'editor'
     window.session = window.editor.getSession()
+    window.session.setValue(window.initial_content)
 
     Range = require('ace/range').Range
 
